@@ -8,6 +8,7 @@
 Для наглядности приведем следующие примеры
 1. Возьмем цветное фото
 2. Сами кинем его в ч/б
-3. После закинем боту и посмотрим, что получится
+3. После, закинем боту и посмотрим, что получится
 
 ![alt tag](https://raw.githubusercontent.com/dlgrv/in_colour_bot/main/img_example/1.png)​ 
+![alt_tag](https://raw.githubusercontent.com/dlgrv/in_colour_bot/main/img_example/2.png)​ 
