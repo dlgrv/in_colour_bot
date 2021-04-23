@@ -7,4 +7,4 @@
 
 Для наглядности приведем следующие примеры
 - Возьмем цветное фото
-![alt tag](https://raw.githubusercontent.com/dlgrv/in_colour_bot/main/img_example/1_1.jpg)​ ![alt tag](https://raw.githubusercontent.com/dlgrv/in_colour_bot/main/img_example/1_1.jpg)​ 
+![alt tag](https://raw.githubusercontent.com/dlgrv/in_colour_bot/main/img_example/1.png)​ 
