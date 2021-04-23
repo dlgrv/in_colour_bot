@@ -11,4 +11,4 @@
 3. После, закинем боту и посмотрим, что получится
 
 ![alt tag](https://raw.githubusercontent.com/dlgrv/in_colour_bot/main/img_example/1.png)​ 
-![alt_tag](https://raw.githubusercontent.com/dlgrv/in_colour_bot/main/img_example/2.png)​ 
+![alt_tag](https://raw.githubusercontent.com/dlgrv/in_colour_bot/main/img_example/2_.png)​ 
