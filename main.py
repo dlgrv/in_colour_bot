@@ -5,9 +5,13 @@ import os
 import db
 import emoji
 from config import token
+from time import time
 
 bot = telebot.TeleBot(token)
 img_name_array = []
+#user_time = {'user_id': 'alloved_time', ...}
+user_time = {}
+time_limit = 5
 
 def colorized(img_name):
     prototxt = './model/colorization_deploy_v2.prototxt'
@@ -47,6 +51,7 @@ def colorized(img_name):
     cv2.imwrite('./input_images/' + img_name + '.jpg', cv2.cvtColor(colorized, cv2.COLOR_RGB2BGR))
     return 0
 
+# not work
 def remove_used_photo(img_name):
     global img_name_array
     img_name_array.append(img_name)
@@ -84,26 +89,30 @@ if __name__ == '__main__':
 
     @bot.message_handler(content_types=['photo'])
     def handle_docs_photo(message):
-        try:
-            file_info = bot.get_file(message.photo[-1].file_id)
-            downloaded_file = bot.download_file(file_info.file_path)
-            print(message)
-            img_name = message.photo[0].file_id
-            src = './input_images/' + img_name + '.jpg'
-            with open(src, 'wb') as new_file:
-                new_file.write(downloaded_file)
-        except Exception as e:
-            print(e)
-        bot.send_message(message.chat.id,
-                         text=f'{emoji.FLAG_RUSSIA}Мы приступили к обработке, ожидайте...{emoji.ROBOT}\n\n'
-                              f'{emoji.FLAG_UNITED_STATES}We have started processing, please wait...{emoji.ROBOT}')
+        if message.chat.id not in user_time or user_time[message.chat.id] < time():
+            user_time[message.chat.id] = time() + time_limit
+            try:
+                file_info = bot.get_file(message.photo[-1].file_id)
+                downloaded_file = bot.download_file(file_info.file_path)
+                print(message)
+                img_name = message.photo[0].file_id
+                print(img_name)
+                src = './input_images/' + img_name + '.jpg'
+                with open(src, 'wb') as new_file:
+                    new_file.write(downloaded_file)
+            except Exception as e:
+                print(e)
+            bot.send_message(message.chat.id,
+                             text=f'{emoji.FLAG_RUSSIA}Мы приступили к обработке, ожидайте...{emoji.ROBOT}\n\n'
+                                  f'{emoji.FLAG_UNITED_STATES}We have started processing, please wait...{emoji.ROBOT}')
+            colorized(img_name)
+            colorized_photo = open('./input_images/' + img_name + '.jpg', 'rb')
+            bot.send_photo(message.chat.id, colorized_photo)
+            # remove_used_photo(img_name)
+        else:
+            bot.send_message(message.chat.id,
+                             text=f'{emoji.FLAG_RUSSIA}Нельзя отправлять фото чаще 1 раза в {time_limit} секунд{emoji.WARNING}\n\n'
+                                  f"{emoji.FLAG_UNITED_STATES}You can't send photos more than once every {time_limit} seconds{emoji.WARNING}")
 
-        colorized(img_name)
-
-        colorized_photo = open('./input_images/' + img_name + '.jpg', 'rb')
-        bot.send_photo(message.chat.id, colorized_photo)
-        #remove_used_photo(img_name)
 
     bot.polling()
-
-
