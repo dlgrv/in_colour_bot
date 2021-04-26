@@ -12,6 +12,7 @@ img_name_array = []
 #user_time = {'user_id': 'alloved_time', ...}
 user_time = {}
 time_limit = 5
+example_photo = open('example_incolour_bot.png', 'rb')
 
 def colorized(img_name):
     prototxt = './model/colorization_deploy_v2.prototxt'
@@ -78,6 +79,7 @@ if __name__ == '__main__':
                                       f'{emoji.RAINBOW}')
             else:
                 # В ПЕРВЫЙ РАЗ
+                bot.send_photo(message.chat.id, example_photo)
                 bot.send_message(message.chat.id,
                                  text=f'{emoji.FLAG_RUSSIA}Отправьте мне свое черно-белое фото, и я его раскрашу'
                                       f'{emoji.RAINBOW}\n\n'
@@ -113,6 +115,5 @@ if __name__ == '__main__':
             bot.send_message(message.chat.id,
                              text=f'{emoji.FLAG_RUSSIA}Нельзя отправлять фото чаще 1 раза в {time_limit} секунд{emoji.WARNING}\n\n'
                                   f"{emoji.FLAG_UNITED_STATES}You can't send photos more than once every {time_limit} seconds{emoji.WARNING}")
-
 
     bot.polling()
